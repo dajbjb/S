@@ -1,335 +1,55 @@
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QUANTUM_TRANSMISSION // CLASSIFIED</title>
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>הזמנה לוולנטיין 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #050505;
+        font-family: 'Assistant', sans-serif;
+      }
+      .font-serif-luxury {
+        font-family: 'Playfair Display', serif;
+      }
+      .font-romantic {
+        font-family: 'Dancing Script', cursive;
+      }
+      @keyframes smoke {
+        0% { transform: translateY(0) scale(1); opacity: 0; }
+        20% { opacity: 0.4; }
+        100% { transform: translateY(-100vh) scale(3); opacity: 0; }
+      }
+      .smoke-particle {
+        position: absolute;
+        bottom: -50px;
+        background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "canvas-confetti": "https://esm.sh/canvas-confetti@^1.9.4",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "framer-motion": "https://esm.sh/framer-motion@^12.33.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
 </head>
-
-<body>
-
-    <!-- Canvas Background -->
-    <canvas id="canvas-bg"></canvas>
-
-    <!-- PHASE 0: Face Recognition Entry -->
-    <div id="face-scan-screen" class="fullscreen-phase">
-        <div class="face-scan-container">
-            <div class="scan-header">
-                <span class="protocol-badge">QUANTUM_TEMPORAL_PROTOCOL v2099.1</span>
-            </div>
-
-            <div class="face-frame">
-                <div class="frame-corner tl"></div>
-                <div class="frame-corner tr"></div>
-                <div class="frame-corner bl"></div>
-                <div class="frame-corner br"></div>
-                <div class="scan-laser"></div>
-                <div class="face-icon">👤</div>
-            </div>
-
-            <div class="scan-status">
-                <p class="scan-text" id="scan-text">מזהה פנים...</p>
-                <div class="scan-progress-bar">
-                    <div class="scan-progress" id="scan-progress"></div>
-                </div>
-            </div>
-
-            <div class="scan-result hidden" id="scan-result">
-                <div class="result-success">
-                    <span class="success-icon">✓</span>
-                    <h2>זיהוי הושלם</h2>
-                    <p class="recipient-name">נמען: <strong>אביה</strong></p>
-                    <p class="access-level">רמת גישה: <span class="highlight">VIP_ETERNAL</span></p>
-                </div>
-                <div class="transmission-info">
-                    <p>🔒 ENCRYPTED TRANSMISSION</p>
-                    <p>📡 ORIGIN: YEAR 2099</p>
-                    <p>💝 TYPE: LOVE_MESSAGE</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PHASE 2: Date Reveal -->
-    <div id="date-screen" class="fullscreen-phase hidden">
-        <div class="date-reveal">
-            <p class="date-label">תאריך המשלוח</p>
-            <div class="date-numbers">
-                <span class="date-digit" id="digit-day-1">0</span>
-                <span class="date-digit" id="digit-day-2">0</span>
-                <span class="date-sep">/</span>
-                <span class="date-digit" id="digit-month-1">0</span>
-                <span class="date-digit" id="digit-month-2">0</span>
-                <span class="date-sep">/</span>
-                <span class="date-digit year" id="digit-year-1">2</span>
-                <span class="date-digit year" id="digit-year-2">0</span>
-                <span class="date-digit year" id="digit-year-3">9</span>
-                <span class="date-digit year" id="digit-year-4">9</span>
-            </div>
-            <p class="date-subtitle">73 שנים קדימה בזמן</p>
-        </div>
-    </div>
-
-    <!-- PHASE 3: Sender Identity -->
-    <div id="sender-screen" class="fullscreen-phase hidden">
-        <div class="sender-reveal">
-            <div class="sender-avatar">
-                <div class="avatar-ring"></div>
-                <div class="avatar-heart">♥</div>
-            </div>
-            <p class="sender-label">השולח</p>
-            <h2 class="sender-name">דוד, מהעתיד</h2>
-            <p class="sender-subtitle">הבחור שפגשת כשהיה בן 16.5 והפך לאהבת חייך</p>
-        </div>
-    </div>
-
-    <!-- PHASE 4: Dramatic Pause / Message Intro -->
-    <div id="intro-message-screen" class="fullscreen-phase hidden">
-        <div class="intro-message-content">
-            <p class="intro-line" id="intro-line-1"></p>
-            <p class="intro-line" id="intro-line-2"></p>
-            <p class="intro-line" id="intro-line-3"></p>
-        </div>
-    </div>
-
-    <!-- PHASE 5: Story Sequence (Multiple Scenes) -->
-    <div id="story-container" class="fullscreen-phase hidden">
-        <!-- Scene 1: How it all began -->
-        <div class="story-scene active" id="scene-1">
-            <div class="scene-year">2026</div>
-            <div class="scene-title">ההתחלה</div>
-            <div class="scene-content">
-                <p id="scene-1-text"></p>
-            </div>
-            <div class="scene-decoration">
-                <div class="floating-heart">♥</div>
-            </div>
-        </div>
-
-        <!-- Scene 2 -->
-        <div class="story-scene" id="scene-2">
-            <div class="scene-year">2028</div>
-            <div class="scene-title">הטיול הגדול</div>
-            <div class="scene-content">
-                <p id="scene-2-text"></p>
-            </div>
-        </div>
-
-        <!-- Scene 3 -->
-        <div class="story-scene" id="scene-3">
-            <div class="scene-year">2030</div>
-            <div class="scene-title">החתונה</div>
-            <div class="scene-content">
-                <p id="scene-3-text"></p>
-            </div>
-        </div>
-
-        <!-- Scene 4 -->
-        <div class="story-scene" id="scene-4">
-            <div class="scene-year">2034</div>
-            <div class="scene-title">הבית הראשון</div>
-            <div class="scene-content">
-                <p id="scene-4-text"></p>
-            </div>
-        </div>
-
-        <!-- Scene 5 -->
-        <div class="story-scene" id="scene-5">
-            <div class="scene-year">2045</div>
-            <div class="scene-title">רגע של משבר</div>
-            <div class="scene-content">
-                <p id="scene-5-text"></p>
-            </div>
-        </div>
-
-        <!-- Scene 6 -->
-        <div class="story-scene" id="scene-6">
-            <div class="scene-year">2055</div>
-            <div class="scene-title">חתונת הזהב</div>
-            <div class="scene-content">
-                <p id="scene-6-text"></p>
-            </div>
-        </div>
-
-        <!-- Scene 7 -->
-        <div class="story-scene" id="scene-7">
-            <div class="scene-year">2075</div>
-            <div class="scene-title">הנכדים</div>
-            <div class="scene-content">
-                <p id="scene-7-text"></p>
-            </div>
-        </div>
-
-        <!-- Scene 8: Final -->
-        <div class="story-scene" id="scene-8">
-            <div class="scene-year">2099</div>
-            <div class="scene-title">היום</div>
-            <div class="scene-content">
-                <p id="scene-8-text"></p>
-            </div>
-        </div>
-
-        <!-- Progress Indicator -->
-        <div class="story-progress">
-            <div class="progress-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- PHASE 6: Final Message (Scrollable) -->
-    <div id="final-message-screen" class="fullscreen-phase hidden">
-        <div class="final-wrapper">
-            <div class="transmission-header-fixed">
-                <span class="transmission-id">TRANSMISSION_ID: LOVE_∞</span>
-                <span class="transmission-status">◉ LIVE</span>
-            </div>
-            <div class="final-scroll-container" id="final-scroll">
-                <div class="final-message-box">
-                    <h1 class="final-title">המסר שלי אלייך</h1>
-                    <div class="final-text" id="final-text"></div>
-                    <div class="signature">
-                        <div class="sig-heart">♥</div>
-                        <p>שלך לנצח ועוד יום,<br><strong>דוד, מ-2099</strong></p>
-                    </div>
-                </div>
-                <div class="final-stats">
-                    <div class="stat">
-                        <span class="stat-value">∞</span>
-                        <span class="stat-label">רמת אהבה</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">100%</span>
-                        <span class="stat-label">התאמה</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">נצחי</span>
-                        <span class="stat-label">סטטוס</span>
-                    </div>
-                </div>
-                <div class="scroll-hint" id="scroll-hint">
-                    <span>גללי למטה לקרוא עוד ▼</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- PHASE 7: Interactive Archive (After Movie) -->
-    <div id="archive-screen" class="fullscreen-phase hidden">
-        <div class="archive-container">
-            <header class="archive-header">
-                <div class="archive-logo">♥ LOVE_ARCHIVE_2099</div>
-                <div class="archive-status">TRANSMISSION COMPLETE</div>
-            </header>
-            <nav class="archive-nav">
-                <button class="archive-tab active" data-tab="replay">צפה שוב</button>
-                <button class="archive-tab" data-tab="memories">זיכרונות</button>
-                <button class="archive-tab" data-tab="message">המסר</button>
-            </nav>
-            <main class="archive-content">
-                <div class="archive-panel active" id="panel-replay">
-                    <div class="replay-card">
-                        <h2>רוצה לחוות את הסיפור שוב?</h2>
-                        <p>לחצי על הכפתור כדי לצפות שוב בסיפור שלנו</p>
-                        <button class="future-btn" onclick="replayStory()">צפה בסיפור שוב</button>
-                    </div>
-                </div>
-                <div class="archive-panel" id="panel-memories">
-                    <div class="memories-grid">
-                        <div class="memory-item" onclick="showMemoryDetail(1)">
-                            <span class="memory-year">2025</span>
-                            <span class="memory-title">הפגישה הראשונה</span>
-                        </div>
-                        <div class="memory-item" onclick="showMemoryDetail(2)">
-                            <span class="memory-year">2026</span>
-                            <span class="memory-title">השנה הראשונה</span>
-                        </div>
-                        <div class="memory-item" onclick="showMemoryDetail(3)">
-                            <span class="memory-year">2028</span>
-                            <span class="memory-title">סיימת צבא</span>
-                        </div>
-                        <div class="memory-item" onclick="showMemoryDetail(4)">
-                            <span class="memory-year">2030</span>
-                            <span class="memory-title">הדירה הראשונה</span>
-                        </div>
-                        <div class="memory-item" onclick="showMemoryDetail(5)">
-                            <span class="memory-year">2032</span>
-                            <span class="memory-title">החתונה</span>
-                        </div>
-                        <div class="memory-item" onclick="showMemoryDetail(6)">
-                            <span class="memory-year">2045</span>
-                            <span class="memory-title">הילדים גדלו</span>
-                        </div>
-                        <div class="memory-item" onclick="showMemoryDetail(7)">
-                            <span class="memory-year">2065</span>
-                            <span class="memory-title">40 שנה ביחד</span>
-                        </div>
-                        <div class="memory-item" onclick="showMemoryDetail(8)">
-                            <span class="memory-year">2099</span>
-                            <span class="memory-title">היום</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="archive-panel" id="panel-message">
-                    <div class="message-display">
-                        <p class="message-full">
-                            <strong style="color: var(--secondary);">איך זה אפשרי?</strong><br><br>
-                            זוכרת שתמיד אמרתי לך שאני הולך להיות מתכנת מצליח?
-                            שהמכינה להנדסת תוכנה היא רק ההתחלה?<br><br>
-                            ובכן, הייתי צודק.
-                            החברה שהקמתי ב-2035 הפכה לאחת מהחברות המובילות בעולם בתחום התקשורת הקוונטית.
-                            וב-2089 הצלחנו לעשות את הבלתי אפשרי: לשלוח מידע אחורה בזמן.<br><br>
-                            הודעה אחת. הודעה יחידה. ובחרתי לשלוח אותה לך, אביה.<br><br>
-                            ---<br><br>
-                            <strong style="color: var(--primary);">אביה יקרה,</strong><br><br>
-                            אני דוד, בן 91, כותב לך משנת 2099.<br>
-                            אבל כשאני חושב עלייך - אני מרגיש בן 16 וחצי שוב.<br><br>
-                            אנחנו עדיין ביחד. אחרי 74 שנים.<br>
-                            עדיין מאוהבים. עדיין מחזיקים ידיים.<br><br>
-                            זוכרת את הפחדים שהיו לך?<br>
-                            שאנחנו צעירים מדי? שהמרחק בזמן הצבא יהרוס אותנו?<br><br>
-                            ובכן, טעית מותק. טעית בגדול.<br>
-                            זה הרבה יותר טוב ממה שדמיינו.<br><br>
-                            את הדבר הכי טוב שקרה לי בחיים.<br>
-                            <strong style="color: var(--gold);">צדקנו. האהבה שלנו גדולה מהזמן עצמו.</strong><br><br>
-                            אוהב אותך לנצח ועוד יום,<br>
-                            <strong>דוד שלך, מ-2099</strong><br><br>
-                            <em style="color: var(--text-muted);">P.S. - תגידי לדוד הצעיר שלא ידאג כל כך. הוא עושה עבודה
-                                מצוינת. את בידיים טובות.</em>
-                        </p>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <!-- Memory Detail Modal -->
-    <div id="memory-modal" class="modal hidden">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeMemoryModal()">✕</button>
-            <div class="modal-year" id="modal-year"></div>
-            <div class="modal-title" id="modal-title"></div>
-            <div class="modal-text" id="modal-text"></div>
-        </div>
-    </div>
-
-    <!-- Skip Button (Always Visible) -->
-    <button class="skip-btn" id="skip-btn" onclick="skipToArchive()">דלג לארכיון ←</button>
-
-    <!-- Audio Toggle -->
-    <button class="audio-btn" id="audio-btn" onclick="toggleAudio()">🔇</button>
-
-
-    <script src="script.js"></script>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
-
 </html>
